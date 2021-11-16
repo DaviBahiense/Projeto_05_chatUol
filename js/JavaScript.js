@@ -1,7 +1,12 @@
+let userName = prompt("Para entrar no chat, insira seu nome")
+let nameObj = {name: userName}
+
 function profile(){
     let page = document.querySelector(".options")
     page.classList.toggle("side")
    
+    
+
     page.innerHTML = `
     <p1>Escolha um contato <br> para enviar mensagem:</p1>
     <div class="contact">
@@ -15,6 +20,73 @@ function profile(){
     <div class="visibility">
 
     </div>
-    <div class="side-over" onclick="profile(this)">    </div>`
+    <div class="side-over" onclick="profile(this)">    </div>` 
+}
+
+function getMsg (){
+    const promisse = axios.get("https://mock-api.driven.com.br/api/v4/uol/messages")
+    promisse.then (putMsgOnScreen)
+
+}
+getMsg()
+
+function putMsgOnScreen (info) {
+    const infoMsgArray = info.data
+  //  console.log(infoMsgArray)
+
+    const main = document.querySelector("main")
+    main.innerHTML = ""
+    for (let i = 0; i < infoMsgArray.length; i++){
+        const here = infoMsgArray[i]
+        const type = here.type
+        const to = here.to
+
+        if (type === "status"){
+            const tagMain = document.querySelector("main")
+            tagMain.innerHTML += `        
+            <div class="stay">
+            (${here.time}) ${here.from} ${here.text} 
+            </div> `
+        }
+        else if (to === "Todos"){
+            const tagMain = document.querySelector("main")
+            tagMain.innerHTML += `
+            <div class="global">
+            (${here.time}) ${here.from} ${here.text}
+            </div>
+            `
+        }
+        else if (to !== "Todos" && type === "private_message"){
+            const tagDirect = document.querySelector("main")
+            tagDirect.innerHTML += `
+            <div class="direct">
+            (${here.time}) ${here.from} ${here.text}
+            </div>
+            `
+        }
+        
+    }
+
+    const last = document.querySelector("main div:last-child")
+    last.scrollIntoView()
+
+}
+setInterval(getMsg, 3000)
+
+function logIn (){
+    let promisse = axios.post("https://mock-api.driven.com.br/api/v4/uol/participants", nameObj)
+    promisse.then(setInterval(logStay, 5000))
+    promisse.catch(erroLogIn)
     
 }
+function erroLogIn (){
+    alert("Usuário já cadastrado")
+    window.location.reload()
+}
+
+logIn()
+function logStay (){
+    let promisse = axios.post("https://mock-api.driven.com.br/api/v4/uol/status", nameObj)
+    promisse.catch(console.log(promisse))
+   
+} 
