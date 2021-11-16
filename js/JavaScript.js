@@ -5,8 +5,6 @@ function profile(){
     let page = document.querySelector(".options")
     page.classList.toggle("side")
    
-    
-
     page.innerHTML = `
     <p1>Escolha um contato <br> para enviar mensagem:</p1>
     <div class="contact">
@@ -29,10 +27,9 @@ function getMsg (){
 
 }
 getMsg()
-
 function putMsgOnScreen (info) {
     const infoMsgArray = info.data
-  //  console.log(infoMsgArray)
+  console.log(infoMsgArray)
 
     const main = document.querySelector("main")
     main.innerHTML = ""
@@ -40,23 +37,32 @@ function putMsgOnScreen (info) {
         const here = infoMsgArray[i]
         const type = here.type
         const to = here.to
+        const from = here.from
 
         if (type === "status"){
             const tagMain = document.querySelector("main")
             tagMain.innerHTML += `        
             <div class="stay">
-            (${here.time}) ${here.from} ${here.text} 
+            (${here.time}) <strong>${here.from}</strong> entra na sala
             </div> `
         }
         else if (to === "Todos"){
             const tagMain = document.querySelector("main")
             tagMain.innerHTML += `
             <div class="global">
+            (${here.time}) <strong>${here.from}</strong> para <strong>${here.to}</strong>: ${here.text} 
+            </div>
+            `
+        }
+        else if (to === "Todos" && type === "private_message"){
+            const tagDirect = document.querySelector("main")
+            tagDirect.innerHTML += `
+            <div class="direct">
             (${here.time}) ${here.from} ${here.text}
             </div>
             `
         }
-        else if (to !== "Todos" && type === "private_message"){
+        else if ((to === userName || from === userName) && type === "private_message"){
             const tagDirect = document.querySelector("main")
             tagDirect.innerHTML += `
             <div class="direct">
@@ -83,10 +89,23 @@ function erroLogIn (){
     alert("Usuário já cadastrado")
     window.location.reload()
 }
-
 logIn()
 function logStay (){
     let promisse = axios.post("https://mock-api.driven.com.br/api/v4/uol/status", nameObj)
     promisse.catch(console.log(promisse))
    
 } 
+
+function sendMsg () {
+    const msgInput = document.querySelector(".msgInput")
+    const text = msgInput.value
+    const msgObj = {
+            from: userName,
+            to: "Todos",
+            text: text,
+            type: "message" 
+    }
+    const promisse = axios.post("https://mock-api.driven.com.br/api/v4/uol/messages", msgObj)
+    promisse.then(getMsg)
+    promisse.catch(window.location.reload)
+}

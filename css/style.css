@@ -81,15 +81,27 @@ footer{
     box-shadow: 0px -4px 6px rgba(0, 0, 0, 0.05);
     background: #FFFFFF;
 
-    font-size: 18px;
+    font-size: 20px;
     font-style: italic;
     font-weight: 400;
     line-height: 21px;
     letter-spacing: 0em;
     text-align: left;
+    color: #000000;
+
 }
 footer ion-icon {
     font-size: 26px;
+    color: black;
+}
+footer input {
+    all:unset;
+    height: 32px;
+
+}
+input:placeholder{
+ color: rgba(0, 0, 0, 0.05)
+
 }
 .options {
     display: none;
@@ -146,4 +158,7 @@ footer ion-icon {
     z-index: 1;
 
     background: rgba(0, 0, 0, 0.6);
+}
+strong {
+    font-weight: 700;
 }
