@@ -42,14 +42,14 @@ function putMsgOnScreen (info) {
         if (type === "status"){
             const tagMain = document.querySelector("main")
             tagMain.innerHTML += `        
-            <div class="stay">
+            <div class="stay" data-identifier="message">
             (${here.time}) <strong>${here.from}</strong> entra na sala
             </div> `
         }
         else if (to === "Todos"){
             const tagMain = document.querySelector("main")
             tagMain.innerHTML += `
-            <div class="global">
+            <div class="global" data-identifier="message">
             (${here.time}) <strong>${here.from}</strong> para <strong>${here.to}</strong>: ${here.text} 
             </div>
             `
@@ -57,7 +57,7 @@ function putMsgOnScreen (info) {
         else if (to === "Todos" && type === "private_message"){
             const tagDirect = document.querySelector("main")
             tagDirect.innerHTML += `
-            <div class="direct">
+            <div class="direct" data-identifier="message">
             (${here.time}) <strong>${here.from}</strong>  reservadamente para <strong>${here.to}</strong>: ${here.text} 
             </div>
             `
@@ -65,7 +65,7 @@ function putMsgOnScreen (info) {
         else if ((to === userName || from === userName) && type === "private_message"){
             const tagDirect = document.querySelector("main")
             tagDirect.innerHTML += `
-            <div class="direct">
+            <div class="direct" data-identifier="message">
             (${here.time}) <strong>${here.from}</strong>  reservadamente para <strong>${here.to}</strong>: ${here.text} 
             </div>
             `
