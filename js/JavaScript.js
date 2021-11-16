@@ -58,7 +58,7 @@ function putMsgOnScreen (info) {
             const tagDirect = document.querySelector("main")
             tagDirect.innerHTML += `
             <div class="direct">
-            (${here.time}) ${here.from} ${here.text}
+            (${here.time}) <strong>${here.from}</strong>  reservadamente para <strong>${here.to}</strong>: ${here.text} 
             </div>
             `
         }
@@ -66,7 +66,7 @@ function putMsgOnScreen (info) {
             const tagDirect = document.querySelector("main")
             tagDirect.innerHTML += `
             <div class="direct">
-            (${here.time}) ${here.from} ${here.text}
+            (${here.time}) <strong>${here.from}</strong>  reservadamente para <strong>${here.to}</strong>: ${here.text} 
             </div>
             `
         }
